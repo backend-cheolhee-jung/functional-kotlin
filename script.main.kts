@@ -36,7 +36,7 @@ open class ConcreteService {
 
 class ConcreteServiceProxy(
     private val concreteService: ConcreteService = ConcreteService() // <-요기보면 기본 생성자가 필요하죠?
-    // 클래스에 붙은 proxy는 나중에 기본 생성자에 setter 방식으로 넣어야하니까 기본생성자 없으면 프록시 안만들어지는 이유에용.
+    // 클래스에 붙은 proxy는 나중에 기본 생성자에 setter 방식처럼 넣어야하니까 기본생성자 없으면 프록시 안만들어지는 이유에용.
 ): ConcreteService() {
     override fun work(message: String): String {
         println("work 호출 전: 인자=$message")
