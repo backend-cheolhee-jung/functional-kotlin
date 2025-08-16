@@ -6,6 +6,7 @@
 
 import arrow.core.Either.Left
 import arrow.core.Either.Right
+import arrow.core.Option
 import arrow.core.flatMap
 
 fun parseInt(str: String) =
@@ -20,3 +21,32 @@ val parseFailure = parseInt("abcd")
     .flatMap { n -> Right(n * 2) }
 
 println(parseFailure)
+
+fun <T: Any> T?.toOption() =
+    Option.fromNullable(this)
+
+val someValue: String? = "Hello"
+val noneValue: String? = null
+val someOption = someValue.toOption()
+val noneOption = noneValue.toOption()
+val options = listOf(someOption, noneOption)
+
+println(someOption)
+println(noneOption)
+
+options.forEach { option ->
+    option.fold(
+        ifEmpty = {
+            println("값이 없습니다.")
+        },
+        ifSome = {
+            println("값이 있습니다: $it")
+        }
+    )
+}
+
+val either = someOption.toEither(ifEmpty = { "값이 없습니다." })
+println(either.leftOrNull())
+either.onRight {
+    println("값이 있습니다: $it")
+}
